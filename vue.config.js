@@ -5,5 +5,6 @@ module.exports = {
       args[0].title = 'Vuello'
       return args
     })
-  }
+  },
+  publicPath: process.env.NODE_ENV === 'production' ? '/vuello/' : '/'
 }
