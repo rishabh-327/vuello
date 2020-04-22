@@ -32,8 +32,8 @@
         </v-card-title>
         <v-card-text>
           <v-container pa-0>
-            <!-- Tasks List -->
             <v-row class="flex-column" no-gutters>
+              <!-- Tasks List -->
               <v-col v-for="(task, taskIndex) of column.tasks" :key="taskIndex">
                 <ColumnTask
                   :column="column"
@@ -46,10 +46,11 @@
               <!-- Add New Task -->
               <div class="pr-4">
                 <v-text-field
-                  label="Add new task."
                   clearable
+                  v-model="newTaskName"
+                  label="Add new task."
                   :color="!isDarkTheme ? 'indigo darken-4' : 'blue lighten-5'"
-                  @keydown.enter="addTask($event, columnIndex)"
+                  @keydown.enter="addTask(columnIndex)"
                 >
                   <template v-slot:prepend>
                     <v-icon
@@ -74,6 +75,9 @@ import columnAndTaskMixin from '@/mixins/columnAndTask'
 import ColumnTask from '@/components/ColumnTask.vue'
 export default {
   name: 'BoardColumn',
+  data: () => ({
+    newTaskName: ''
+  }),
   mixins: [columnAndTaskMixin],
   components: {
     ColumnTask
@@ -85,11 +89,12 @@ export default {
         params: { id, columnIndex, taskIndex }
       })
     },
-    addTask(event, columnIndex) {
+    addTask(columnIndex) {
       this.$store.commit('ADD_TASK', {
-        taskName: event.target.value,
+        taskName: this.newTaskName,
         columnIndex
       })
+      this.newTaskName = ''
     },
     updateColumn(event, columnIndex) {
       this.$store.commit('UPDATE_COLUMN', {

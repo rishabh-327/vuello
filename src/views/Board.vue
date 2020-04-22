@@ -16,9 +16,10 @@
             <v-card-title class="py-2 pb-0">
               <v-text-field
                 clearable
+                v-model="newColumnTitle"
                 label="Add new column"
+                @keydown.enter="addColumn"
                 :color="!isDarkTheme ? 'indigo darken-4' : 'blue lighten-5'"
-                @keydown.enter="addColumn($event)"
               >
                 <template v-slot:prepend>
                   <v-icon
@@ -35,7 +36,6 @@
     <v-dialog v-model="isTaskOpen" width="700" persistent>
       <router-view />
     </v-dialog>
-    <v-dialog fullscreen> </v-dialog>
   </div>
 </template>
 <script>
@@ -44,6 +44,9 @@ import BoardColumn from '@/components/BoardColumn.vue'
 
 export default {
   name: 'Board',
+  data: () => ({
+    newColumnTitle: ''
+  }),
   computed: {
     ...mapState(['board']),
     isTaskOpen() {
@@ -54,8 +57,9 @@ export default {
     BoardColumn
   },
   methods: {
-    addColumn(event) {
-      this.$store.commit('ADD_COLUMN', { columnTitle: event.target.value })
+    addColumn() {
+      this.$store.commit('ADD_COLUMN', { columnTitle: this.newColumnTitle })
+      this.newColumnTitle = ''
     }
   }
 }

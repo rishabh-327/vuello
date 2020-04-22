@@ -3,6 +3,7 @@
     <v-card-title primary-title class="pb-0">
       <v-container pa-0>
         <v-row align="center">
+          <!-- Task Title -->
           <v-col cols="10">
             <v-text-field
               :value="task.name"
@@ -15,8 +16,10 @@
               @input="updateTaskName"
             ></v-text-field>
           </v-col>
+
+          <!-- Close Button -->
           <v-col cols="2" class="text-right">
-            <v-btn text small class="sq-btn" @click="closeTask"
+            <v-btn text class="sq-btn" @click="closeTask"
               ><v-icon>mdi-close</v-icon></v-btn
             >
           </v-col>
@@ -30,6 +33,7 @@
         min-height="20rem"
         hide-details
         solo
+        :color="isDarkTheme ? 'white' : 'black'"
         background-color="secondary"
         @input="updateTaskDescription"
       >
@@ -37,11 +41,10 @@
     </v-card-text>
     <v-card-actions class="px-4 pb-4">
       <v-spacer></v-spacer>
-      <v-btn text color="red darken-2" small @click="deleteTask">Delete</v-btn>
+      <v-btn text color="red darken-2" @click="deleteTask">Delete</v-btn>
       <v-btn
         :disabled="!taskEdited"
-        color="green accent-3"
-        small
+        color="green accent-2"
         class="px-4"
         @click="updateTask"
         >Save</v-btn
@@ -116,7 +119,7 @@ export default {
 <style lang="scss" scoped>
 .sq-btn {
   min-width: 0 !important;
-  padding: 0.5rem !important;
+  padding: 0 0.4rem !important;
 }
 .vuello-task-name.v-input {
   line-height: 1.7;
